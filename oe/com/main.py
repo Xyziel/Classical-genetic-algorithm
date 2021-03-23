@@ -10,7 +10,7 @@ def f(x):
 
 def main():
 
-    # Przykladowe dane 
+    # Przykladowe dane
     a = -10  # poczatek przedzialu
     b = 10  # koniec przedzialu
     bits = 10  # liczba bitow genu # Pytanie czy moga byc bity czy ustawiac dokladnosc?
