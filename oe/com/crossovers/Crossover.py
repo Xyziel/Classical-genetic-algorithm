@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from oe.com.models import Population
+
 
 class Crossover(ABC):
 
@@ -7,6 +9,6 @@ class Crossover(ABC):
         self.cross_probability = cross_probability
 
     @abstractmethod
-    def cross(self, parents):
+    def cross(self, parents: Population, new_gen_size: int) -> Population:
         pass
 
