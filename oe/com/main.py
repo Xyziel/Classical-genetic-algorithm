@@ -16,12 +16,12 @@ def main():
     bits = 20  # liczba bitow genu # Pytanie czy moga byc bity czy ustawiac dokladnosc?
     n = 2  # liczba zmiennych
     size = 100  # rozmiar populacji
-    i = 100  # liczba iteracji
+    i = 1000  # liczba iteracji
     k = 5  # liczba grup turniejowych
     c_prob = 0.85  # prawdopodobienstwa krzyzowania
-    m_prob = 0.15  # prawd. mutacji
-    in_prob = 0.01  # prawd. inwersji
-    pop_percent = 0.2  # procent populacji w selekcji najlepszych
+    m_prob = 0.01  # prawd. mutacji
+    in_prob = 0.15  # prawd. inwersji
+    pop_percent = 0.1  # procent populacji w selekcji najlepszych
     maximum = True  # czy maksymalizacja
 
     pop = Population()
@@ -33,10 +33,10 @@ def main():
     # print(pop_dec)
     # print(values)
 
-    sel = TheBestOnesSelection(pop_percent)
+    sel = RouletteWheelSelection(pop_percent)
     selected_parents = sel.select_parents(pop, values, maximum)
 
-    crossover = OnePointCrossover(c_prob)
+    crossover = TwoPointsCrossover(c_prob)
     new_generation = crossover.cross(selected_parents, size)
 
     mutation = OneBitFlipMutation(m_prob)
@@ -61,12 +61,14 @@ def main():
         else:
             value_in_each_it.append(min(values))
 
-    if max:
+    if maximum:
         print("Wartosc max (powinna byc bliska 200): " + str(max(values)))
         print("Jak zmienia")
     else:
         print("Wartosc min (powinna byc bliska 0): " + str(min(values)))
         print("Jak zmienia")
     print(value_in_each_it)
+
+
 if __name__ == '__main__':
     main()

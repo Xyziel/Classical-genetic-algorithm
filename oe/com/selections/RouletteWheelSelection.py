@@ -10,20 +10,20 @@ class RouletteWheelSelection(Selection):
         self.__percentage = percentage
 
     def select_parents(self, population: Population, values: list, maximum: bool) -> Population:
-        # dla znajdowania minimum
         selected_parents = Population()
 
-        sum_of_values = sum([1 / x for x in values])
-        probabilities = [(1 / values[i]) / sum_of_values for i in range(len(values))]
+        if maximum:
+            sum_of_values = sum(values)
+            probabilities = [(values[i]) / sum_of_values for i in range(len(values))]
+        else:
+            sum_of_values = sum([1 / x for x in values])
+            probabilities = [(1 / values[i]) / sum_of_values for i in range(len(values))]
         number_of_parents = round(population.get_size() * self.__percentage)
-        # print(sum(probabilities))
         distribution = []
         sum_dist = 0
         for x in probabilities:
             sum_dist += x
             distribution.append(sum_dist)
-        # print(probabilities)
-        # print(distribution)
 
         for i in range(number_of_parents):
             random_value = random.uniform(0, 1)
