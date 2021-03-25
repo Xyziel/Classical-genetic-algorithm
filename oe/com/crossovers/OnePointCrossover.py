@@ -37,4 +37,8 @@ class OnePointCrossover(Crossover):
                 child = [Chromosome(child2_bits[i]) for i in range(parents.get_number_of_variables())]
                 new_gen.add_chromosomes(child)
 
+        # if elite strategy makes new population too long the last element needs to be deleted
+        if new_gen.get_size() > new_gen_size:
+            new_gen.delete_chromosomes_index(new_gen.get_size() - 1)
+
         return new_gen
