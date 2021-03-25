@@ -18,49 +18,39 @@ def main():
     size = 100  # rozmiar populacji
     i = 100  # liczba iteracji
     k = 5  # liczba grup turniejowych
-    c_prob = 0.85  # prawdopodobienstwa krzyzowania
-    m_prob = 0.15  # prawd. mutacji
-    in_prob = 0.15  # prawd. inwersji
-    pop_percent = 0.1  # procent populacji w selekcji najlepszych
+    cross_prob = 0.85  # prawdopodobienstwa krzyzowania
+    mutate_prob = 0.15  # prawd. mutacji
+    invert_prob = 0.15  # prawd. inwersji
+    population_percent = 0.1  # procent populacji w selekcji najlepszych oraz ruletce
     maximum = False  # czy maksymalizacja
 
-    pop = Population()
-    pop.create_random_population(size, n, bits)
+    population = Population()
+    population.create_random_population(size, n, bits)
     fun = MyFunction(f)
-    pop_dec = pop.get_population_decimal(a, b)
-    values = fun.get_values_population_dec(pop_dec)
+    population_decimal = population.get_population_decimal(a, b)
+    values = fun.get_values_population_dec(population_decimal)
 
-    # print(pop_dec)
-    # print(values)
-
-    sel = TheBestOnesSelection(pop_percent)
-    selected_parents = sel.select_parents(pop, values, maximum)
-
-    crossover = ThreePointsCrossover(c_prob)
-    new_generation = crossover.cross(selected_parents, size)
-
-    mutation = OneBitFlipMutation(m_prob)
-    mutation.mutate(new_generation)
-
-    inversion = Inversion(in_prob)
-    inversion.invert(new_generation)
+    selection = TheBestOnesSelection(population_percent)
+    crossover = ThreePointsCrossover(cross_prob)
+    mutation = OneBitFlipMutation(mutate_prob)
+    inversion = Inversion(invert_prob)
 
     value_in_each_it = []
 
     for i in range(i):
-        new_generation_dec = new_generation.get_population_decimal(a, b)
-        values = fun.get_values_population_dec(new_generation_dec)
-        selected_parents = sel.select_parents(new_generation, values, maximum)
-        #print(selected_parents.get_population_decimal(a, b))
-        new_generation = crossover.cross(selected_parents, size)
-        mutation.mutate(new_generation)
-        inversion.invert(new_generation)
-        #print(new_generation.get_population_decimal(a, b))
+        selected_parents = selection.select_parents(population, values, maximum)
+        population = crossover.cross(selected_parents, size)
+        mutation.mutate(population)
+        inversion.invert(population)
+
+        population_dec = population.get_population_decimal(a, b)
+        values = fun.get_values_population_dec(population_dec)
+
         if maximum:
             value_in_each_it.append(max(values))
         else:
             value_in_each_it.append(min(values))
-
+            
     if maximum:
         print("Wartosc max (powinna byc bliska 200): " + str(max(values)))
         print("Jak zmienia")
