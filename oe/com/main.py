@@ -35,7 +35,7 @@ def main():
     sel = RouletteWheelSelection(pop_percent)
     selected_parents = sel.select_parents(pop, values)
 
-    crossover = OnePointCrossover(c_prob)
+    crossover = TwoPointsCrossover(c_prob)
     new_generation = crossover.cross(selected_parents, size)
 
     mutation = OneBitFlipMutation(m_prob)
@@ -56,7 +56,7 @@ def main():
         inversion.invert(new_generation)
         #print(new_generation.get_population_decimal(a, b))
         min_value_in_each_it.append(min(values))
-        
+
     print("Wartosc min (powinna byc bliska 0): " + str(min(values)))
     print("Jak zmienia")
     print(min_value_in_each_it)
