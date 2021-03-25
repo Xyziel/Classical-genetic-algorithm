@@ -35,10 +35,10 @@ def main():
     sel = RouletteWheelSelection(pop_percent)
     selected_parents = sel.select_parents(pop, values)
 
-    crossover = TwoPointsCrossover(c_prob)
+    crossover = UniformCrossover(c_prob)
     new_generation = crossover.cross(selected_parents, size)
 
-    mutation = OneBitFlipMutation(m_prob)
+    mutation = TwoBitsFlipMutation(m_prob)
     mutation.mutate(new_generation)
 
     inversion = Inversion(in_prob)
