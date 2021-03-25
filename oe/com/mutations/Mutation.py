@@ -7,6 +7,6 @@ class Mutation(ABC):
         self.mutate_probability = mutate_probability
 
     @abstractmethod
-    def mutate(self, population: list) -> list:
+    def mutate(self, population: list):
         pass
 

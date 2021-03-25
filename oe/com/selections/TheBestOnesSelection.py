@@ -7,7 +7,7 @@ class TheBestOnesSelection(Selection):
     def __init__(self, percentage):
         self.__percentage = percentage
 
-    def select_parents(self, population: Population, values: list) -> Population:
+    def select_parents(self, population: Population, values: list, maximum: bool) -> Population:
         i = 0
         selected_parents = Population()
         value_map = {}

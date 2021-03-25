@@ -22,6 +22,7 @@ def main():
     m_prob = 0.15  # prawd. mutacji
     in_prob = 0.01  # prawd. inwersji
     pop_percent = 0.2  # procent populacji w selekcji najlepszych
+    maximum = True  # czy maksymalizacja
 
     pop = Population()
     pop.create_random_population(size, n, bits)
@@ -32,19 +33,19 @@ def main():
     # print(pop_dec)
     # print(values)
 
-    sel = RouletteWheelSelection(pop_percent)
+    sel = TournamentSelection(k, maximum)
     selected_parents = sel.select_parents(pop, values)
 
-    crossover = UniformCrossover(c_prob)
+    crossover = OnePointCrossover(c_prob)
     new_generation = crossover.cross(selected_parents, size)
 
-    mutation = TwoBitsFlipMutation(m_prob)
+    mutation = OneBitFlipMutation(m_prob)
     mutation.mutate(new_generation)
 
     inversion = Inversion(in_prob)
     inversion.invert(new_generation)
 
-    min_value_in_each_it = []
+    value_in_each_it = []
 
     for i in range(i):
         new_generation_dec = new_generation.get_population_decimal(a, b)
@@ -55,12 +56,17 @@ def main():
         mutation.mutate(new_generation)
         inversion.invert(new_generation)
         #print(new_generation.get_population_decimal(a, b))
-        min_value_in_each_it.append(min(values))
+        if maximum:
+            value_in_each_it.append(max(values))
+        else:
+            value_in_each_it.append(min(values))
 
-    print("Wartosc min (powinna byc bliska 0): " + str(min(values)))
-    print("Jak zmienia")
-    print(min_value_in_each_it)
-
-
+    if max:
+        print("Wartosc max (powinna byc bliska 200): " + str(max(values)))
+        print("Jak zmienia")
+    else:
+        print("Wartosc min (powinna byc bliska 0): " + str(min(values)))
+        print("Jak zmienia")
+    print(value_in_each_it)
 if __name__ == '__main__':
     main()

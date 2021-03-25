@@ -9,7 +9,7 @@ class RouletteWheelSelection(Selection):
     def __init__(self, percentage):
         self.__percentage = percentage
 
-    def select_parents(self, population: Population, values: list) -> Population:
+    def select_parents(self, population: Population, values: list, maximum: bool) -> Population:
         # dla znajdowania minimum
         selected_parents = Population()
 

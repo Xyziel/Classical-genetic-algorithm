@@ -9,7 +9,7 @@ class TournamentSelection(Selection):
     def __init__(self, k: int):
         self.__number_of_groups = k
 
-    def select_parents(self, population: Population, values: list) -> Population:
+    def select_parents(self, population: Population, values: list, maximum: bool) -> Population:
         # winners of the tournament
         selected_parents = Population()
         population_size = population.get_size()
@@ -25,16 +25,21 @@ class TournamentSelection(Selection):
                 group_sizes[i] += 1
                 remainder -= 1
                 i += 1
+
         chromosomes = []
         for i in range(self.__number_of_groups):
             best_index = random.choice(indexes)
             indexes.remove(best_index)
             for j in range(group_sizes[i] - 1):
                 index = random.choice(indexes)
-                if values[best_index] > values[index]:
-                    best_index = index
+                if maximum:
+                    if values[best_index] < values[index]:
+                        best_index = index
+                else:
+                    if values[best_index] > values[index]:
+                        best_index = index
                 indexes.remove(index)
                 chromosomes = population.get_population()[best_index]
             selected_parents.add_chromosomes(chromosomes)
-        #print(selected_parents.get_population())
+
         return selected_parents
