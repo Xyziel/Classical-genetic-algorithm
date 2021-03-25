@@ -9,12 +9,12 @@ class TwoPointsCrossover(Crossover):
     def cross(self, parents: Population, new_gen_size: int) -> Population:
         new_gen = Population()
         while new_gen.get_size() < new_gen_size:
-            if random.uniform(0, 1) <= 1:
+            if random.uniform(0, 1) <= self.cross_probability:
 
                 # draw first random cross point for every variable
                 cross_points = [[random.randint(0, parents.get_number_of_bits() - 1)] for _ in
                                 range(parents.get_number_of_variables())]
-                for i in range(2):
+                for i in range(parents.get_number_of_variables()):
                     while True:
                         # draw second random cross point being different from the first
                         cross_points[i].append(random.randint(0, parents.get_number_of_bits() - 1))

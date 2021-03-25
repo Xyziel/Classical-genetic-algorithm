@@ -16,13 +16,13 @@ def main():
     bits = 20  # liczba bitow genu # Pytanie czy moga byc bity czy ustawiac dokladnosc?
     n = 2  # liczba zmiennych
     size = 100  # rozmiar populacji
-    i = 1000  # liczba iteracji
+    i = 100  # liczba iteracji
     k = 5  # liczba grup turniejowych
     c_prob = 0.85  # prawdopodobienstwa krzyzowania
-    m_prob = 0.01  # prawd. mutacji
+    m_prob = 0.15  # prawd. mutacji
     in_prob = 0.15  # prawd. inwersji
     pop_percent = 0.1  # procent populacji w selekcji najlepszych
-    maximum = True  # czy maksymalizacja
+    maximum = False  # czy maksymalizacja
 
     pop = Population()
     pop.create_random_population(size, n, bits)
@@ -33,10 +33,10 @@ def main():
     # print(pop_dec)
     # print(values)
 
-    sel = RouletteWheelSelection(pop_percent)
+    sel = TheBestOnesSelection(pop_percent)
     selected_parents = sel.select_parents(pop, values, maximum)
 
-    crossover = TwoPointsCrossover(c_prob)
+    crossover = ThreePointsCrossover(c_prob)
     new_generation = crossover.cross(selected_parents, size)
 
     mutation = OneBitFlipMutation(m_prob)
