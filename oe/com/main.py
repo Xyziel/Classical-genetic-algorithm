@@ -33,8 +33,8 @@ def main():
     # print(pop_dec)
     # print(values)
 
-    sel = TournamentSelection(k, maximum)
-    selected_parents = sel.select_parents(pop, values)
+    sel = TheBestOnesSelection(pop_percent)
+    selected_parents = sel.select_parents(pop, values, maximum)
 
     crossover = OnePointCrossover(c_prob)
     new_generation = crossover.cross(selected_parents, size)
@@ -50,7 +50,7 @@ def main():
     for i in range(i):
         new_generation_dec = new_generation.get_population_decimal(a, b)
         values = fun.get_values_population_dec(new_generation_dec)
-        selected_parents = sel.select_parents(new_generation, values)
+        selected_parents = sel.select_parents(new_generation, values, maximum)
         #print(selected_parents.get_population_decimal(a, b))
         new_generation = crossover.cross(selected_parents, size)
         mutation.mutate(new_generation)
