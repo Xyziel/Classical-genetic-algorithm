@@ -45,3 +45,12 @@ class Population:
         self.__size += 1
         self.__number_of_variables = len(chromosomes)
         self.__number_of_bits = chromosomes[0].get_number_of_bits()
+
+    def delete_chromosomes_index(self, index: int):
+        self.__population.pop(index)
+        self.__size -= 1
+
+    def __add__(self, another_population):
+        for chromosomes in another_population.get_population():
+            self.add_chromosomes(chromosomes)
+        return self
