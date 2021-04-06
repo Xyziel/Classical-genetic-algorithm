@@ -10,7 +10,10 @@ class EdgeBitFlipMutation(Mutation):
         for chromosomes in population.get_population():
             if random.uniform(0, 1) <= self.mutate_probability:
                 for j in range(population.get_number_of_variables()):
-                    bit_edge_index = population.get_number_of_bits() - 1
+                    if random.uniform(0, 1) <= 0.5:
+                        bit_edge_index = population.get_number_of_bits() - 1
+                    else:
+                        bit_edge_index = 0
                     chrom_bits = chromosomes[j].get_bits_array()
                     #print(chrom_bits)
                     if chrom_bits[bit_edge_index] == 0:
