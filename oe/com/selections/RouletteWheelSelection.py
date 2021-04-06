@@ -6,8 +6,8 @@ from oe.com.selections.Selection import Selection
 
 class RouletteWheelSelection(Selection):
 
-    def __init__(self, percentage):
-        self.__percentage = percentage
+    # def __init__(self, percentage):
+    #     self.__percentage = percentage
 
     def select_parents(self, population: Population, values: list, maximum: bool) -> Population:
         selected_parents = Population()
@@ -18,7 +18,8 @@ class RouletteWheelSelection(Selection):
         else:
             sum_of_values = sum([1 / x for x in values])
             probabilities = [(1 / values[i]) / sum_of_values for i in range(len(values))]
-        number_of_parents = round(population.get_size() * self.__percentage)
+        # number_of_parents = round(population.get_size() * self.__percentage)
+        number_of_parents = 2
         distribution = []
         sum_dist = 0
         for x in probabilities:
