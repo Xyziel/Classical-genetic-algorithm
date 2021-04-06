@@ -4,8 +4,8 @@ from oe.com.selections.Selection import Selection
 
 class TheBestOnesSelection(Selection):
 
-    def __init__(self, percentage):
-        self.__percentage = percentage
+    def __init__(self, number):
+        self.__number = number
 
     def select_parents(self, population: Population, values: list, maximum: bool) -> Population:
         i = 0
@@ -18,8 +18,7 @@ class TheBestOnesSelection(Selection):
             values.sort(reverse=True)
         else:
             values.sort()
-        number_of_selecting_parents = round(population.get_size() * self.__percentage)
-        for i in range(number_of_selecting_parents):
+        for i in range(self.__number):
             chroms = value_map[values[i]]
             selected_parents.add_chromosomes(chroms)
         return selected_parents
