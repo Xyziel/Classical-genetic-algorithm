@@ -1,3 +1,6 @@
 .idea
 venv
+
+.jpg
+.txt
 __pycache__
