@@ -4,7 +4,14 @@ from oe.com.mutations import *
 from oe.com.crossovers import *
 from oe.com.selections import *
 from oe.com.elite import *
+from oe.com.io import *
+from oe.com.plot import *
+
 import tkinter as tk
+import time
+import statistics
+import os
+import matplotlib.pyplot as plt
 
 
 def f(x):
@@ -53,6 +60,9 @@ def calculate(app):
     elite = ElitismStrategy(elite_number)
     maxi = maximization == 1
 
+    # start_timer
+    start_timer = time.perf_counter()
+
     population = Population()
     population.create_random_population(size, 2, bits)
     fun = MyFunction(f)
@@ -60,6 +70,10 @@ def calculate(app):
     values = fun.get_values_population_dec(population_decimal)
 
     value_in_each_it = []
+
+    # przygotowanie kontenerow do wykresow
+    std_values = []
+    mean_values = []
 
     for i in range(epochs):
         elite_population = elite.choose_n_best(population, values, maxi)
@@ -79,18 +93,61 @@ def calculate(app):
         population + elite_population
 
         population_dec = population.get_population_decimal(a, b)
+
+        # przypisanie nowych wartosci na potrzeby create_timer_window
+        population_decimal = population_dec
+
         values = fun.get_values_population_dec(population_dec)
+        std_values.append(statistics.pstdev(values))
+        mean_values.append(statistics.mean(values))
 
         if maxi:
             value_in_each_it.append(max(values))
         else:
             value_in_each_it.append(min(values))
 
+    # end_timer
+    end_timer = time.perf_counter()
+
+    # generating txt values
+    txt_generator = TxtGenerator(os.getcwd() + "/data/values/")
+    txt_generator.create_file("Standard deviation.txt", std_values)
+    txt_generator.create_file("Mean values.txt", mean_values)
+    txt_generator.create_file("Best values.txt", value_in_each_it)
+
+    iterations_list = [i + 1 for i in range(population.get_size())]
+
+    # generating plots
+    png_generator = PngGenerator(os.getcwd() + "/data/plots/")
+    png_generator.create_file_from_figure("Best values.jpg",
+                                          PlotGenerator.create_plot("Values for each iteration", x_label="Iterations",
+                                                                    y_label="Values",
+                                                                    x_data=iterations_list,
+                                                                    y_data=value_in_each_it))
+    png_generator.create_file_from_figure("Standard deviation.jpg",
+                                          PlotGenerator.create_plot("Standard deviation for each iteration",
+                                                                    x_label="Iterations",
+                                                                    y_label="Values",
+                                                                    x_data=iterations_list,
+                                                                    y_data=std_values))
+    png_generator.create_file_from_figure("Mean values.jpg",
+                                          PlotGenerator.create_plot("Mean values for each iteration",
+                                                                    x_label="Iterations",
+                                                                    y_label="Values",
+                                                                    x_data=iterations_list,
+                                                                    y_data=mean_values))
+
+
     if maxi:
         print("Wartosc max (powinna byc bliska 200): " + str(max(values)))
+        # create_timer_window
+        app.create_timer_window(end_timer - start_timer, population_decimal[values.index(max(values))], max(values))
 
     else:
         print("Wartosc min (powinna byc bliska 0): " + str(min(values)))
+        # create_timer_window
+        app.create_timer_window(end_timer - start_timer, population_decimal[values.index(min(values))], min(values))
+
     print("Jak zmienialy sie wartosci")
     print(value_in_each_it)
 
@@ -102,7 +159,7 @@ def main():
     # bits = 25  # liczba bitow genu # Pytanie czy moga byc bity czy ustawiac dokladnosc?
     # n = 2  # liczba zmiennych
     # size = 100  # rozmiar populacji
-    # i = 1  # liczba iteracji
+    # i = 10  # liczba iteracji
     # k = 5  # liczba grup turniejowych
     # cross_prob = 0.85  # prawdopodobienstwa krzyzowania
     # mutate_prob = 0.15  # prawd. mutacji
