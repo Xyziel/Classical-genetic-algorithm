@@ -1,6 +1,7 @@
 .idea
 venv
 
-.jpg
-.txt
+*.jpg
+*.txt
+
 __pycache__
