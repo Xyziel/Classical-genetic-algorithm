@@ -8,6 +8,5 @@ class TxtGenerator(FileGenerator):
 
     def create_file(self, name: str, data: list):
         file = open(self.__directory + name, "w")
-        print(len(data))
         [file.write(f"{i + 1} {str(data[i])}\n") for i in range(len(data))]
         file.close()
