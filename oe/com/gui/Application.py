@@ -116,19 +116,19 @@ class Application(tk.Frame):
             print(self.maximization.get())
 
     def get_all_values(self):
-        values = {"selection": self.selection.get(),
-                  "crossover": self.crossover.get(),
-                  "mutation": self.mutation.get(),
-                  "cross_prob": self.crossover_prob.get(),
-                  "mutation_prob": self.mutation_prob.get(),
-                  "inversion_prob": self.inversion_prob.get(),
-                  "beginning": self.beginning_of_interval.get(),
-                  "end": self.end_of_interval.get(),
-                  "bits": self.number_of_bits.get(),
-                  "population": self.population_size.get(),
-                  "epochs": self.number_of_epochs.get(),
-                  "elite": self.elite_strategy_amount.get(),
-                  "max": self.maximization.get()}
+        # values = {"selection": self.selection.get(),
+        #           "crossover": self.crossover.get(),
+        #           "mutation": self.mutation.get(),
+        #           "cross_prob": self.crossover_prob.get(),
+        #           "mutation_prob": self.mutation_prob.get(),
+        #           "inversion_prob": self.inversion_prob.get(),
+        #           "beginning": self.beginning_of_interval.get(),
+        #           "end": self.end_of_interval.get(),
+        #           "bits": self.number_of_bits.get(),
+        #           "population": self.population_size.get(),
+        #           "epochs": self.number_of_epochs.get(),
+        #           "elite": self.elite_strategy_amount.get(),
+        #           "max": self.maximization.get()}
 
         #test values
         # values = {"selection": "Roulette Wheel",
@@ -146,22 +146,25 @@ class Application(tk.Frame):
         #           "max": 0}
 
         #test_values_bay
-        # values = {"selection": "The Best Ones",
-        #           "crossover": "Two Points",
-        #           "mutation": "Two Bits",
-        #           "cross_prob": 0.6,
-        #           "mutation_prob": 0.4,
-        #           "inversion_prob": 0.1,
-        #           "beginning": 1.0,
-        #           "end": 10.0,
-        #           "bits": 40,
-        #           "population": 100,
-        #           "epochs": 1000,
-        #           "elite": 10,
-        #           "max": 0}
+        values = {"selection": "The Best Ones",
+                  "crossover": "Two Points",
+                  "mutation": "Two Bits",
+                  "cross_prob": 0.6,
+                  "mutation_prob": 0.4,
+                  "inversion_prob": 0.1,
+                  "beginning": 1.0,
+                  "end": 10.0,
+                  "bits": 40,
+                  "population": 100,
+                  "epochs": 100,
+                  "elite": 10,
+                  "max": 0}
 
         if self.selection.get() == 'Tournament' or self.selection.get() == 'The Best Ones':
             values['k'] = self.selection_entry_number.get()
+        else:
+            values['k'] = -1
+
         return values
 
     def create_timer_window(self, time, arg, value):

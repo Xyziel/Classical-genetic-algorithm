@@ -6,8 +6,8 @@ from oe.com.selections.Selection import Selection
 
 class RouletteWheelSelection(Selection):
 
-    # def __init__(self, percentage):
-    #     self.__percentage = percentage
+    def __init__(self, percentage):
+        self.__percentage = percentage
 
     def select_parents(self, population: Population, values: list, maximum: bool) -> Population:
         selected_parents = Population()

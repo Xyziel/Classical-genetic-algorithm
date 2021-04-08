@@ -19,14 +19,15 @@ def f(x):
     # return x[0] ** 2 + x[1] ** 2
 
     # bayes
-    return (1.5 - x[0] + x[0]*x[1]) ** 2 + (2.25 - x[0] + x[0]*(x[1] ** 2)) ** 2 + (2.625 - x[0] + x[0]*(x[1] ** 3)) ** 2
+    return (1.5 - x[0] + x[0] * x[1]) ** 2 + (2.25 - x[0] + x[0] * (x[1] ** 2)) ** 2 + (
+                2.625 - x[0] + x[0] * (x[1] ** 3)) ** 2
 
     # ackley
     # a = 20.0
     # b = 0.2
     # c = 2 * 3.14
     # return ((-a * math.exp(-b * math.sqrt(sum([i ** 2 for i in x]) / len(x)))) - (
-    #     math.exp(sum(math.cos(i) for i in x) / len(x))) +
+    #     math.exp(sum(math.cos(c * i) for i in x) / len(x))) +
     #         a + math.exp(1))
 
 
@@ -43,30 +44,41 @@ def calculate(app):
     elite_number = values['elite']
     maximization = values['max']
 
-    if values['selection'] == 'Tournament':
-        k = values['k']
-        selection = TournamentSelection(k)
-    elif values['selection'] == 'The Best Ones':
-        k = values['k']
-        selection = TheBestOnesSelection(k)
-    else:
-        selection = RouletteWheelSelection()
+    selection_name = values['selection'].replace(" ", "") + "Selection"
+    selection = globals()[selection_name](values['k'])
+    print(type(selection))
 
-    if values['crossover'] == 'One Point':
-        crossover = OnePointCrossover(cross_prob)
-    elif values['crossover'] == 'Two Points':
-        crossover = TwoPointsCrossover(cross_prob)
-    elif values['crossover'] == 'Three Points':
-        crossover = ThreePointsCrossover(cross_prob)
-    else:
-        crossover = UniformCrossover(cross_prob)
+    # if values['selection'] == 'Tournament':
+    #     k = values['k']
+    #     selection = TournamentSelection(k)
+    # elif values['selection'] == 'The Best Ones':
+    #     k = values['k']
+    #     selection = TheBestOnesSelection(k)
+    # else:
+    #     selection = RouletteWheelSelection()
 
-    if values['mutation'] == 'Edge Bit':
-        mutation = EdgeBitFlipMutation(mutate_prob)
-    elif values['mutation'] == 'One Bit':
-        mutation = OneBitFlipMutation(mutate_prob)
-    else:
-        mutation = TwoBitsFlipMutation(mutate_prob)
+    crossover_name = values['crossover'].replace(" ", "") + "Crossover"
+    crossover = globals()[crossover_name](cross_prob
+                                          )
+    # if values['crossover'] == 'One Point':
+    #     crossover = OnePointCrossover(cross_prob)
+    # elif values['crossover'] == 'Two Points':
+    #     crossover = TwoPointsCrossover(cross_prob)
+    # elif values['crossover'] == 'Three Points':
+    #     crossover = ThreePointsCrossover(cross_prob)
+    # else:
+    #     crossover = UniformCrossover(cross_prob)
+
+    mutation_name = values['mutation'].replace(" ", "") + "FlipMutation"
+    mutation = globals()[mutation_name](mutate_prob)
+
+    # print(type(mutation))
+    # if values['mutation'] == 'Edge Bit':
+    #     mutation = EdgeBitFlipMutation(mutate_prob)
+    # elif values['mutation'] == 'One Bit':
+    #     mutation = OneBitFlipMutation(mutate_prob)
+    # else:
+    #     mutation = TwoBitsFlipMutation(mutate_prob)
 
     inversion = Inversion(invert_prob)
     elite = ElitismStrategy(elite_number)
@@ -79,7 +91,6 @@ def calculate(app):
     population.create_random_population(size, 2, bits)
     fun = MyFunction(f)
     population_decimal = population.get_population_decimal(a, b)
-    values = fun.get_values_population_dec(population_decimal)
 
     value_in_each_it = []
 
@@ -88,8 +99,12 @@ def calculate(app):
     mean_values = []
 
     for i in range(epochs):
+        values = fun.get_values_population_dec(population_decimal)
+        std_values.append(statistics.pstdev(values))
+        mean_values.append(statistics.mean(values))
         elite_population = elite.choose_n_best(population, values, maxi)
         selected_parents = selection.select_parents(population, values, maxi)
+
         if isinstance(selection, RouletteWheelSelection):
             population = crossover.cross(selected_parents, 2)
             while population.get_size() < size - elite_number:
@@ -109,10 +124,7 @@ def calculate(app):
         # przypisanie nowych wartosci na potrzeby create_timer_window
         population_decimal = population_dec
 
-        values = fun.get_values_population_dec(population_dec)
-        print(values)
-        std_values.append(statistics.pstdev(values))
-        mean_values.append(statistics.mean(values))
+        # values = fun.get_values_population_dec(population_dec)
 
         if maxi:
             value_in_each_it.append(max(values))
