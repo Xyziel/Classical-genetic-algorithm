@@ -12,11 +12,22 @@ import time
 import statistics
 import os
 import matplotlib.pyplot as plt
+import math
 
 
 def f(x):
     # return x[0] ** 2 + x[1] ** 2
+
+    # bayes
     return (1.5 - x[0] + x[0]*x[1]) ** 2 + (2.25 - x[0] + x[0]*(x[1] ** 2)) ** 2 + (2.625 - x[0] + x[0]*(x[1] ** 3)) ** 2
+
+    # ackley
+    # a = 20.0
+    # b = 0.2
+    # c = 2 * 3.14
+    # return ((-a * math.exp(-b * math.sqrt(sum([i ** 2 for i in x]) / len(x)))) - (
+    #     math.exp(sum(math.cos(i) for i in x) / len(x))) +
+    #         a + math.exp(1))
 
 
 def calculate(app):
@@ -123,23 +134,22 @@ def calculate(app):
     # generating plots
     png_generator = PngGenerator(os.getcwd() + "/data/plots/")
     png_generator.create_file("Best values.jpg",
-                                          PlotGenerator.create_plot("Values for each iteration", x_label="Iterations",
-                                                                    y_label="Values",
-                                                                    x_data=iterations_list,
-                                                                    y_data=value_in_each_it))
+                              PlotGenerator.create_plot("Values for each iteration", x_label="Iterations",
+                                                        y_label="Values",
+                                                        x_data=iterations_list,
+                                                        y_data=value_in_each_it))
     png_generator.create_file("Standard deviation.jpg",
-                                          PlotGenerator.create_plot("Standard deviation for each iteration",
-                                                                    x_label="Iterations",
-                                                                    y_label="Values",
-                                                                    x_data=iterations_list,
-                                                                    y_data=std_values))
+                              PlotGenerator.create_plot("Standard deviation for each iteration",
+                                                        x_label="Iterations",
+                                                        y_label="Values",
+                                                        x_data=iterations_list,
+                                                        y_data=std_values))
     png_generator.create_file("Mean values.jpg",
-                                          PlotGenerator.create_plot("Mean values for each iteration",
-                                                                    x_label="Iterations",
-                                                                    y_label="Values",
-                                                                    x_data=iterations_list,
-                                                                    y_data=mean_values))
-
+                              PlotGenerator.create_plot("Mean values for each iteration",
+                                                        x_label="Iterations",
+                                                        y_label="Values",
+                                                        x_data=iterations_list,
+                                                        y_data=mean_values))
 
     if maxi:
         print("Wartosc max (powinna byc bliska 200): " + str(max(values)))
