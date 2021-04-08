@@ -31,7 +31,7 @@ class TwoPointsCrossover(Crossover):
                         cross_points[i][1] = tmp
 
                 tmp_parents = parents.get_population().copy()
-                print(tmp_parents)
+                # print(tmp_parents)
                 parent1 = random.choice(tmp_parents)
                 # remove parent1 from the list so it cannot be chosen
                 tmp_parents.remove(parent1)

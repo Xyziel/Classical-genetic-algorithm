@@ -104,7 +104,7 @@ class GeneticAlgorithm:
         print("Jak zmienialy sie wartosci")
         print(value_in_each_it)
 
-        pass
+
 
     def __create_instance_using_str(self, name, suffix, param):
         class_name = self.__values[name].replace(" ", "") + suffix
