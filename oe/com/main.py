@@ -31,6 +31,7 @@ def calculate(app):
     invert_prob = values['inversion_prob']
     elite_number = values['elite']
     maximization = values['max']
+
     if values['selection'] == 'Tournament':
         k = values['k']
         selection = TournamentSelection(k)
@@ -98,6 +99,7 @@ def calculate(app):
         population_decimal = population_dec
 
         values = fun.get_values_population_dec(population_dec)
+        print(values)
         std_values.append(statistics.pstdev(values))
         mean_values.append(statistics.mean(values))
 
