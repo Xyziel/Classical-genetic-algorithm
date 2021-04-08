@@ -15,8 +15,8 @@ import matplotlib.pyplot as plt
 
 
 def f(x):
-    return x[0] ** 2 + x[1] ** 2
-    # return (1.5 - x[0] + x[0]*x[1]) ** 2 + (2.25 - x[0] + x[0]*(x[1] ** 2)) ** 2 + (2.625 - x[0] + x[0]*(x[1] ** 3)) ** 2
+    # return x[0] ** 2 + x[1] ** 2
+    return (1.5 - x[0] + x[0]*x[1]) ** 2 + (2.25 - x[0] + x[0]*(x[1] ** 2)) ** 2 + (2.625 - x[0] + x[0]*(x[1] ** 3)) ** 2
 
 
 def calculate(app):
@@ -110,27 +110,28 @@ def calculate(app):
     end_timer = time.perf_counter()
 
     # generating txt values
+    print(os.getcwd())
     txt_generator = TxtGenerator(os.getcwd() + "/data/values/")
     txt_generator.create_file("Standard deviation.txt", std_values)
     txt_generator.create_file("Mean values.txt", mean_values)
     txt_generator.create_file("Best values.txt", value_in_each_it)
 
-    iterations_list = [i + 1 for i in range(population.get_size())]
+    iterations_list = [i + 1 for i in range(len(value_in_each_it))]
 
     # generating plots
     png_generator = PngGenerator(os.getcwd() + "/data/plots/")
-    png_generator.create_file_from_figure("Best values.jpg",
+    png_generator.create_file("Best values.jpg",
                                           PlotGenerator.create_plot("Values for each iteration", x_label="Iterations",
                                                                     y_label="Values",
                                                                     x_data=iterations_list,
                                                                     y_data=value_in_each_it))
-    png_generator.create_file_from_figure("Standard deviation.jpg",
+    png_generator.create_file("Standard deviation.jpg",
                                           PlotGenerator.create_plot("Standard deviation for each iteration",
                                                                     x_label="Iterations",
                                                                     y_label="Values",
                                                                     x_data=iterations_list,
                                                                     y_data=std_values))
-    png_generator.create_file_from_figure("Mean values.jpg",
+    png_generator.create_file("Mean values.jpg",
                                           PlotGenerator.create_plot("Mean values for each iteration",
                                                                     x_label="Iterations",
                                                                     y_label="Values",

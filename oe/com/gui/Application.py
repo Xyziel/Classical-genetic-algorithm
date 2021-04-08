@@ -131,19 +131,35 @@ class Application(tk.Frame):
         #           "max": self.maximization.get()}
 
         #test values
-        values = {"selection": "Roulette Wheel",
-                  "crossover": "One Point",
-                  "mutation": self.mutation.get(),
-                  "cross_prob": 0.85,
-                  "mutation_prob": 0.15,
-                  "inversion_prob": 0.15,
-                  "beginning": -10.0,
+        # values = {"selection": "Roulette Wheel",
+        #           "crossover": "One Point",
+        #           "mutation": self.mutation.get(),
+        #           "cross_prob": 0.85,
+        #           "mutation_prob": 0.15,
+        #           "inversion_prob": 0.15,
+        #           "beginning": -10.0,
+        #           "end": 10.0,
+        #           "bits": 25,
+        #           "population": 100,
+        #           "epochs": 100,
+        #           "elite": 5,
+        #           "max": 0}
+
+        #test_values_bay
+        values = {"selection": "The Best Ones",
+                  "crossover": "Two Points",
+                  "mutation": "Two Bits",
+                  "cross_prob": 0.6,
+                  "mutation_prob": 0.4,
+                  "inversion_prob": 0.1,
+                  "beginning": 1.0,
                   "end": 10.0,
-                  "bits": 25,
+                  "bits": 40,
                   "population": 100,
-                  "epochs": 100,
-                  "elite": 5,
+                  "epochs": 1000,
+                  "elite": 10,
                   "max": 0}
+
         if self.selection.get() == 'Tournament' or self.selection.get() == 'The Best Ones':
             values['k'] = self.selection_entry_number.get()
         return values
