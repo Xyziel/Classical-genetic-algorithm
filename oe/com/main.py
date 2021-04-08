@@ -62,12 +62,10 @@ def calculate(app):
 
     # start_timer
     start_timer = time.perf_counter()
-
     population = Population()
     population.create_random_population(size, 2, bits)
     fun = MyFunction(f)
-    population_decimal = population.get_population_decimal(a, b)
-    values = fun.get_values_population_dec(population_decimal)
+
 
     value_in_each_it = []
 
@@ -76,6 +74,10 @@ def calculate(app):
     mean_values = []
 
     for i in range(epochs):
+        population_decimal = population.get_population_decimal(a, b)
+        values = fun.get_values_population_dec(population_decimal)
+        std_values.append(statistics.pstdev(values))
+        mean_values.append(statistics.mean(values))
         elite_population = elite.choose_n_best(population, values, maxi)
         selected_parents = selection.select_parents(population, values, maxi)
         if isinstance(selection, RouletteWheelSelection):
@@ -93,13 +95,6 @@ def calculate(app):
         population + elite_population
 
         population_dec = population.get_population_decimal(a, b)
-
-        # przypisanie nowych wartosci na potrzeby create_timer_window
-        population_decimal = population_dec
-
-        values = fun.get_values_population_dec(population_dec)
-        std_values.append(statistics.pstdev(values))
-        mean_values.append(statistics.mean(values))
 
         if maxi:
             value_in_each_it.append(max(values))
