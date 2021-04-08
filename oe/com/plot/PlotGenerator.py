@@ -6,7 +6,7 @@ class PlotGenerator:
     pass
 
     @staticmethod
-    def create_plot(title: str, x_label: str, y_label: str, x_data: str, y_data: str):
+    def create_plot(title: str, x_label: str, y_label: str, x_data: list, y_data: list):
         fig = plt.figure()
         plt.title(title)
         plt.xlabel(x_label)
