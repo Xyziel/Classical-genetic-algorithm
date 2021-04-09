@@ -112,7 +112,7 @@ class GeneticAlgorithm:
         return obj
 
     def __generate_txt_files(self, data):
-        txt_generator = TxtGenerator(os.getcwd() + "/data/values/")
+        txt_generator = TxtGenerator(os.getcwd() + "/oe/com/data/values/")
         txt_generator.create_file("Best values.txt", data[0])
         txt_generator.create_file("Mean values.txt", data[1])
         txt_generator.create_file("Standard deviation.txt", data[2])
@@ -123,7 +123,7 @@ class GeneticAlgorithm:
                   "Standard deviation for each iteration"]
         iterations_list = [i + 1 for i in range(len(data[0]))]
 
-        png_generator = PngGenerator(os.getcwd() + "/data/plots/")
+        png_generator = PngGenerator(os.getcwd() + "/oe/com/data/plots/")
 
         for i in range(len(data)):
             png_generator.create_file(file_names[i],
