@@ -113,7 +113,6 @@ class Application(tk.Frame):
         else:
             self.selection_label.grid_remove()
             self.selection_entry.grid_remove()
-            print(self.maximization.get())
 
     def get_all_values(self):
         values = {"selection": self.selection.get(),

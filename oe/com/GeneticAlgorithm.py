@@ -5,6 +5,7 @@ from oe.com.selections import *
 from oe.com.elite import *
 from oe.com.io import *
 from oe.com.plot import *
+from oe.com.crossovers import *
 
 import time
 import statistics
@@ -94,9 +95,6 @@ class GeneticAlgorithm:
             # create_timer_window
             self.__app.create_timer_window(end_timer - start_timer, population_decimal[values.index(min(values))],
                                            min(values))
-
-
-
 
     def __create_instance_using_str(self, name, suffix, param):
         class_name = self.__values[name].replace(" ", "") + suffix
