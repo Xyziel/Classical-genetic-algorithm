@@ -3,7 +3,6 @@ from oe.com.GeneticAlgorithm import GeneticAlgorithm
 
 import tkinter as tk
 
-
 def main():
     root = tk.Tk()
     root.title("Genetic Algorithms")
