@@ -15,10 +15,8 @@ class EdgeBitFlipMutation(Mutation):
                     else:
                         bit_edge_index = 0
                     chrom_bits = chromosomes[j].get_bits_array()
-                    #print(chrom_bits)
                     if chrom_bits[bit_edge_index] == 0:
                         chrom_bits[bit_edge_index] = 1
                     else:
                         chrom_bits[bit_edge_index] = 0
-                    #print(chrom_bits)
 

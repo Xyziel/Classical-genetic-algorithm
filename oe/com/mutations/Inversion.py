@@ -20,7 +20,6 @@ class Inversion:
                         if bit2_index != bit1_index:
                             break
 
-                    #print(bit1_index, bit2_index)
                     if bit2_index < bit1_index:
                         tmp = bit2_index
                         bit2_index = bit1_index
@@ -28,10 +27,7 @@ class Inversion:
 
                     chrom_bits = chromosomes[j].get_bits_array()
 
-                    #print(bit1_index, bit2_index)
-                    #print(chrom_bits)
                     for i in range((bit2_index + 1 - bit1_index) // 2):
                         tmp = chrom_bits[bit1_index + i]
                         chrom_bits[bit1_index + i] = chrom_bits[bit2_index - i]
                         chrom_bits[bit2_index - i] = tmp
-                    #print(chrom_bits)

@@ -1,5 +1,4 @@
 from oe.com.io.FileGenerator import FileGenerator
-import matplotlib.figure
 import matplotlib.pyplot as plt
 
 

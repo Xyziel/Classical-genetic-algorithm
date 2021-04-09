@@ -1,18 +1,14 @@
 from oe.com.gui.Application import Application
 from oe.com.models import *
 from oe.com.mutations import *
-from oe.com.crossovers import *
 from oe.com.selections import *
 from oe.com.elite import *
 from oe.com.io import *
 from oe.com.plot import *
 
-import tkinter as tk
 import time
 import statistics
 import os
-import matplotlib.pyplot as plt
-import math
 
 
 class GeneticAlgorithm:
@@ -90,19 +86,15 @@ class GeneticAlgorithm:
         self.__generate_png_files([value_in_each_it, mean_values, std_values])
 
         if maxi:
-            print("Wartosc max (powinna byc bliska 200): " + str(max(values)))
             # create_timer_window
             self.__app.create_timer_window(end_timer - start_timer, population_decimal[values.index(max(values))],
                                            max(values))
 
         else:
-            print("Wartosc min (powinna byc bliska 0): " + str(min(values)))
             # create_timer_window
             self.__app.create_timer_window(end_timer - start_timer, population_decimal[values.index(min(values))],
                                            min(values))
 
-        print("Jak zmienialy sie wartosci")
-        print(value_in_each_it)
 
 
 
